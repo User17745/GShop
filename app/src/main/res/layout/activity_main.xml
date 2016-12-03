@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context="com.rigassembler.hplap.gshop.MainActivity">
+
+    <WebView
+        android:id="@+id/browser"
+        android:layout_width="match_parent"
+        android:layout_height="450dp" />
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="3dp"
+        android:text=""
+        android:textColor="#000"
+        android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/website_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:text="Website" />
+
+    <Button
+        android:id="@+id/price_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/website_button"
+        android:layout_alignBottom="@+id/website_button"
+        android:layout_toLeftOf="@+id/website_button"
+        android:layout_toStartOf="@+id/website_button"
+        android:text="Price" />
+
+    <Button
+        android:id="@+id/name_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/price_button"
+        android:layout_alignBottom="@+id/price_button"
+        android:layout_toLeftOf="@+id/price_button"
+        android:layout_toStartOf="@+id/price_button"
+        android:text="Name" />
+
+</RelativeLayout>
