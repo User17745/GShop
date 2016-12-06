@@ -30,15 +30,14 @@ public class Searcher {
     }
 
     void initSearch() {
-        currentKeyword = keywords.get(keyIndex);
+        currentKeyword = keywords.get(keyIndex++);
         browser.loadUrl("https://www.google.co.in/search?q=" + "buy+" + currentKeyword.replace(' ', '+'));
     }
 
     void loadNext() {
         if (keyIndex < keywords.size()) {
-            currentKeyword = keywords.get(keyIndex);
+            currentKeyword = keywords.get(keyIndex++);
             browser.loadUrl("https://www.google.co.in/search?q=" + "buy+" + currentKeyword.replace(' ', '+'));
-            keyIndex++;
         }
     }
 }

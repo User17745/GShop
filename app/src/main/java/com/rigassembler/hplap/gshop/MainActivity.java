@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 /* This call inject JavaScriptInterface into the page which just finished loading. */
                 browser.loadUrl("javascript:HTMLOUT.processHTML(document.documentElement.outerHTML);");
-                //searcher.loadNext();
             }
         });
 
