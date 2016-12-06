@@ -2,11 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/create_csv_option"
+        android:id="@+id/option_create_csv"
         android:title="Export to CSV"/>
 
     <item
-        android:id="@+id/refresh_option"
+        android:id="@+id/option_read_csv"
+        android:title="Read from CSV"/>
+
+    <item
+        android:id="@+id/option_refresh"
         android:title="Refresh"/>
 
 </menu>

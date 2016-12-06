@@ -1,9 +1,13 @@
 package com.rigassembler.hplap.gshop;
 
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.rigassembler.hplap.gshop.MainActivity.browser;
+import static com.rigassembler.hplap.gshop.MainActivity.mainActContext;
+import static com.rigassembler.hplap.gshop.MainActivity.miningButton;
 
 /**
  * Created by HP Lap on 22-Nov-16.
@@ -16,7 +20,7 @@ public class Searcher {
 
     Searcher() {
         populate();
-        initSearch();
+        search();
     }
 
     void populate() {
@@ -29,15 +33,14 @@ public class Searcher {
         keywords.add("pens");
     }
 
-    void initSearch() {
-        currentKeyword = keywords.get(keyIndex++);
-        browser.loadUrl("https://www.google.co.in/search?q=" + "buy+" + currentKeyword.replace(' ', '+'));
-    }
-
-    void loadNext() {
+    void search() {
         if (keyIndex < keywords.size()) {
             currentKeyword = keywords.get(keyIndex++);
             browser.loadUrl("https://www.google.co.in/search?q=" + "buy+" + currentKeyword.replace(' ', '+'));
+        } else {
+            Toast.makeText(mainActContext, "Last Search Reached, resetting to the first one.\nPress again to restart :)", Toast.LENGTH_LONG).show();
+            keyIndex = 0;
+            miningButton.setText("Start Mining Again!");
         }
     }
 }

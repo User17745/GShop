@@ -30,23 +30,23 @@
         android:textSize="50sp" />
 
     <Button
-        android:id="@+id/website_button"
+        android:id="@+id/mining_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="10dp"
-        android:text="Website" />
+        android:text="Start Mining!" />
 
-    <Button
+   <!-- <Button
         android:id="@+id/price_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/website_button"
-        android:layout_alignBottom="@+id/website_button"
-        android:layout_toLeftOf="@+id/website_button"
-        android:layout_toStartOf="@+id/website_button"
+        android:layout_alignBaseline="@+id/mining_button"
+        android:layout_alignBottom="@+id/mining_button"
+        android:layout_toLeftOf="@+id/mining_button"
+        android:layout_toStartOf="@+id/mining_button"
         android:text="Price" />
 
     <Button
@@ -57,6 +57,6 @@
         android:layout_alignBottom="@+id/price_button"
         android:layout_toLeftOf="@+id/price_button"
         android:layout_toStartOf="@+id/price_button"
-        android:text="Name" />
+        android:text="Name" />-->
 
 </RelativeLayout>

@@ -11,13 +11,9 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.rigassembler.hplap.gshop.CodeSaver.writeToFile;
-import static com.rigassembler.hplap.gshop.Extractor.productNames;
-import static com.rigassembler.hplap.gshop.Extractor.productPrices;
 import static com.rigassembler.hplap.gshop.Extractor.totalProducts;
-import static com.rigassembler.hplap.gshop.Extractor.websiteNames;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     static WebView browser;
     TextView count;
-    Button names, prices, websites;
+    Button names, prices;
+    static Button miningButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        miningButton = (Button) findViewById(R.id.mining_button);
+        miningButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /* load a web page */
+                searcher = new Searcher();
+                miningButton.setText("Force Next->");
+            }
+        });
 
         /* An instance of this class will be registered as a JavaScriptInterface interface */
         class CodeCopyJavaScriptInterface {
@@ -66,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         count.setText(String.valueOf(totalProducts));
-                        searcher.loadNext();
+                        searcher.search();
                     }
                 });
             }
@@ -84,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /* load a web page */
-        searcher = new Searcher();
     }
 
     @Override
@@ -98,11 +102,13 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.create_csv_option)
+        if (id == R.id.option_create_csv)
             new CSV();
 
+        if (id == R.id.option_read_csv)
+            new CSV(true);
 
-        if (id == R.id.refresh_option) {
+        if (id == R.id.option_refresh) {
             browser.loadUrl(browser.getUrl());
         }
 
@@ -136,18 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        websites = (Button) findViewById(R.id.website_button);
-        websites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (websiteNames.size() > 0)
-                    for (String wName : websiteNames)
-                        Toast.makeText(getApplicationContext(), wName, Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(getApplicationContext(), "List is still building..", Toast.LENGTH_SHORT).show();
-            }
-        });
-        websites.setOnLongClickListener(new View.OnLongClickListener() {
+        miningButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 if (websiteNames.size() > 0)
