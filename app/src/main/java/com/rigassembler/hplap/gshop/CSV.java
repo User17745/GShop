@@ -16,8 +16,8 @@ import java.util.List;
 import static com.rigassembler.hplap.gshop.Extractor.productNames;
 import static com.rigassembler.hplap.gshop.Extractor.productPrices;
 import static com.rigassembler.hplap.gshop.Extractor.websiteNames;
+import static com.rigassembler.hplap.gshop.MainActivity.mainActContext;
 import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
-import static com.rigassembler.hplap.gshop.MainActivity.searcher;
 
 /**
  * Created by HP Lap on 21-Nov-16.
@@ -37,11 +37,11 @@ public class CSV {
 
     static List<String[]> data;
 
-    CSV(Context context)
+    CSV()
     {
         fileConfig();
-        dataPrepare(context);
-        makeCSV(context);
+        dataPrepare();
+        makeCSV();
     }
 
     public void fileConfig(){
@@ -54,7 +54,7 @@ public class CSV {
         filePath = csvFolder.getPath() + File.separator + fileName;
     }
 
-    public void dataPrepare(Context context) {
+    public void dataPrepare() {
         data = new ArrayList<String[]>();
         data.add(new String[]{"Search Keyword",
                                     "Product Name",
@@ -68,10 +68,10 @@ public class CSV {
                                                     productPrices.get(i)});
             }
         else
-            Toast.makeText(context, "Extractor->dataPrepare():\nList is still building..", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mainActContext, "Extractor->dataPrepare():\nList is still building..", Toast.LENGTH_SHORT).show();
     }
 
-    public static void makeCSV(Context context) {
+    public static void makeCSV() {
 
         try {
             if(data.size()>0) {
@@ -79,13 +79,13 @@ public class CSV {
                 writer.writeAll(data);
                 writer.close();
                 serial++;
-                Toast.makeText(context, "File saved as:\n" + filePath, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActContext, "File saved as:\n" + filePath, Toast.LENGTH_SHORT).show();
             }
             else
-                Toast.makeText(context,"Data is empty",Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActContext,"Data is empty",Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(context, "Error while creating the file :/", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mainActContext, "Error while creating the file :/", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -16,11 +16,11 @@ public class Extractor {
     static int totalProducts;
     static List<String> productNames, productPrices, websiteNames;
 
-    public Extractor(Context context){
+    public Extractor(){
         shortener();
         count();
-        populate(context);
-        new CSV(context);
+        populate();
+        new CSV();
     }
 
     public void shortener(){
@@ -35,7 +35,7 @@ public class Extractor {
             }
     }
 
-    public void populate(Context context) {
+    public void populate() {
 
         int index;
 

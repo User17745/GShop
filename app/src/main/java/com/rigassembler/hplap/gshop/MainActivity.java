@@ -1,5 +1,6 @@
 package com.rigassembler.hplap.gshop;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     static String code;
     static Searcher searcher;
+    static Context mainActContext;
 
     static WebView browser;
     TextView count;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainActContext = getApplicationContext();
 
         browser = (WebView) findViewById(R.id.browser);
         browser.getSettings().setJavaScriptEnabled(true);
@@ -43,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView codeDis = (TextView) findViewById(R.id.code);
                 codeDis.setText(code);
 
-                writeToFile(code, getApplicationContext());
+                writeToFile(code);
             }
         });
 
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 // process the html as needed by the app
                 code = html;
 
-                new Extractor(getApplicationContext());
+                new Extractor();
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -84,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
         searcher = new Searcher();
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.create_csv_option)
-            new CSV(getApplicationContext());
+            new CSV();
 
 
         if (id == R.id.refresh_option) {
