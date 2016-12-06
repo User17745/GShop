@@ -20,6 +20,7 @@ public class Extractor {
         shortener();
         count();
         populate(context);
+        new CSV(context);
     }
 
     public void shortener(){
@@ -81,7 +82,5 @@ public class Extractor {
                         else
                             websiteNames.add(code.substring(fromIndex.get(i),toIndex.get(i)));
         }
-
-        new CSV(context);
     }
 }

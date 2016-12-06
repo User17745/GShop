@@ -21,7 +21,7 @@ import static com.rigassembler.hplap.gshop.Extractor.websiteNames;
 public class MainActivity extends AppCompatActivity {
 
     static String code;
-    static Searcher Searcher;
+    static Searcher searcher;
 
     static WebView browser;
     TextView count;
@@ -49,25 +49,27 @@ public class MainActivity extends AppCompatActivity {
 
 
         /* An instance of this class will be registered as a JavaScriptInterface interface */
-        class MyJavaScriptInterface {
+        class CodeCopyJavaScriptInterface {
             @JavascriptInterface
             @SuppressWarnings("unused")
             public void processHTML(String html) {
                 // process the html as needed by the app
                 code = html;
+
                 new Extractor(getApplicationContext());
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         count.setText(String.valueOf(totalProducts));
+                        searcher.loadNext();
                     }
                 });
             }
         }
 
             /* Register a new JavaScriptInterface interface called HTMLOUT */
-        browser.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
+        browser.addJavascriptInterface(new CodeCopyJavaScriptInterface(), "HTMLOUT");
 
             /* WebViewClient must be set BEFORE calling loadUrl! */
         browser.setWebViewClient(new WebViewClient() {
@@ -75,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 /* This call inject JavaScriptInterface into the page which just finished loading. */
                 browser.loadUrl("javascript:HTMLOUT.processHTML(document.documentElement.outerHTML);");
-                Searcher.loadNext();
+                //searcher.loadNext();
             }
         });
 
         /* load a web page */
-        Searcher = new Searcher();
+        searcher = new Searcher();
     }
 
 
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.create_csv_option)
             new CSV(getApplicationContext());
+
 
         if (id == R.id.refresh_option) {
             browser.loadUrl(browser.getUrl());

@@ -17,7 +17,7 @@ import static com.rigassembler.hplap.gshop.Extractor.productNames;
 import static com.rigassembler.hplap.gshop.Extractor.productPrices;
 import static com.rigassembler.hplap.gshop.Extractor.websiteNames;
 import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
-import static com.rigassembler.hplap.gshop.Searcher.keywords;
+import static com.rigassembler.hplap.gshop.MainActivity.searcher;
 
 /**
  * Created by HP Lap on 21-Nov-16.
@@ -25,9 +25,9 @@ import static com.rigassembler.hplap.gshop.Searcher.keywords;
 
 public class CSV {
 
-    static int serial = 0;
+    static int serial = 1;
 
-    static String currentDateAndTime = DateFormat.getDateTimeInstance().format(new Date());;
+    static String currentDateAndTime = DateFormat.getDateTimeInstance().format(new Date());
 
     static String baseDirectory = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();;
     File csvFolder = new File(baseDirectory + File.separator + "G Shop" + File.separator + "Output CSV" + File.separator);
@@ -62,7 +62,7 @@ public class CSV {
                                             "Product Price"});
         if (websiteNames.size()>0)
             for (int i = 0; i < websiteNames.size(); i++) {
-                data.add(new String[]{keywords.get(serial),
+                data.add(new String[]{currentKeyword,
                                             productNames.get(i),
                                                 websiteNames.get(i),
                                                     productPrices.get(i)});
@@ -78,9 +78,7 @@ public class CSV {
                 CSVWriter writer = new CSVWriter(new FileWriter(filePath));
                 writer.writeAll(data);
                 writer.close();
-                /*Batch Trial*/
                 serial++;
-                /*Batch Trial*/
                 Toast.makeText(context, "File saved as:\n" + filePath, Toast.LENGTH_SHORT).show();
             }
             else
