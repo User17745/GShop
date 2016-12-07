@@ -13,12 +13,14 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.jar.Manifest;
 
 import static com.rigassembler.hplap.gshop.Extractor.productNames;
 import static com.rigassembler.hplap.gshop.Extractor.productPrices;
 import static com.rigassembler.hplap.gshop.Extractor.websiteNames;
 import static com.rigassembler.hplap.gshop.MainActivity.mainActContext;
 import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
+import static com.rigassembler.hplap.gshop.VariableRepo.searchProducts;
 
 /**
  * Created by HP Lap on 21-Nov-16.
@@ -43,6 +45,7 @@ public class CSV {
     static List<String[]> writeData;
     static List<String[]> readData;
 
+
     CSV() {
         writeFileConfig();
         dataPrepare();
@@ -63,6 +66,9 @@ public class CSV {
         writeCsvFolder.mkdirs();
         writeFileName = serial + " G Shop Price List (" + currentDateAndTime + ").csv";
         writeFilePath = writeCsvFolder.getPath() + File.separator + writeFileName;
+
+        //Toast.makeText(mainActContext,writeFileName,Toast.LENGTH_SHORT).show();
+        //Toast.makeText(mainActContext,"Saved at: " + writeFilePath,Toast.LENGTH_SHORT).show();
     }
 
     public void dataPrepare() {
@@ -83,7 +89,6 @@ public class CSV {
     }
 
     public static void writeCSV() {
-
         try {
             if (writeData.size() > 0) {
                 CSVWriter writer = new CSVWriter(new FileWriter(writeFilePath));
@@ -108,11 +113,9 @@ public class CSV {
 
     void readCSV() {
         try {
-            ArrayList<String> searchProducts = new ArrayList<>();
 
             readData = new ArrayList<String[]>();
             CSVReader reader = new CSVReader(new FileReader(readFilePath));
-            readData = reader.readAll();
 
             String[] row;
             while ((row = reader.readNext()) != null) {

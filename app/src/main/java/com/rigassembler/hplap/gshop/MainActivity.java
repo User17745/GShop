@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        new VariableRepo();
         mainActContext = getApplicationContext();
 
         browser = (WebView) findViewById(R.id.browser);
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 /* load a web page */
                 searcher = new Searcher();
-                miningButton.setText("Force Next->");
             }
         });
 
