@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import static com.rigassembler.hplap.gshop.CodeSaver.writeToFile;
 import static com.rigassembler.hplap.gshop.Extractor.totalProducts;
+import static com.rigassembler.hplap.gshop.VariableRepo.code;
 
 public class MainActivity extends AppCompatActivity {
 
-    static String code;
     static Searcher searcher;
     static Context mainActContext;
 

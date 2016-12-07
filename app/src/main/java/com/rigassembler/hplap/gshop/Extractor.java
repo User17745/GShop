@@ -5,7 +5,12 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.rigassembler.hplap.gshop.MainActivity.code;
+import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
+import static com.rigassembler.hplap.gshop.VariableRepo.code;
+import static com.rigassembler.hplap.gshop.VariableRepo.productNames;
+import static com.rigassembler.hplap.gshop.VariableRepo.productPrices;
+import static com.rigassembler.hplap.gshop.VariableRepo.searchKey;
+import static com.rigassembler.hplap.gshop.VariableRepo.websiteNames;
 
 /**
  * Created by HP Lap on 19-Nov-16.
@@ -14,13 +19,12 @@ import static com.rigassembler.hplap.gshop.MainActivity.code;
 public class Extractor {
 
     static int totalProducts;
-    static List<String> productNames, productPrices, websiteNames;
 
     public Extractor(){
         shortener();
         count();
         populate();
-        new CSV();
+        //new CSV();
     }
 
     public void shortener(){
@@ -41,10 +45,6 @@ public class Extractor {
 
         List<Integer> fromIndex = new ArrayList<Integer>();
         List<Integer> toIndex = new ArrayList<Integer>();
-
-        productNames = new ArrayList<String>();
-        productPrices = new ArrayList<String>();
-        websiteNames = new ArrayList<String>();
 
         ArrayList<String> oTag = new ArrayList<>();
         oTag.add("<h4 class=\"_HLg\">");
@@ -79,8 +79,10 @@ public class Extractor {
             else
                 if(i >= totalProducts && i < 2*totalProducts)
                     productPrices.add(code.substring(fromIndex.get(i)+7,toIndex.get(i)).replace(",",""));
-                        else
-                            websiteNames.add(code.substring(fromIndex.get(i),toIndex.get(i)));
+                        else {
+                    websiteNames.add(code.substring(fromIndex.get(i), toIndex.get(i)));
+                    searchKey.add(currentKeyword);
+                }
         }
     }
 }

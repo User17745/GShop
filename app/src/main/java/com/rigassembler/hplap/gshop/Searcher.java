@@ -43,7 +43,7 @@ public class Searcher {
             browser.loadUrl("https://www.google.co.in/search?q=" + "buy+" + currentKeyword.replace(' ', '+'));
             miningButton.setText("Force Next->");
         } else {
-            //new CSV();
+            new CSV();
             Toast.makeText(mainActContext, "Last Search Reached, resetting to the first one.\nPress again to restart :)", Toast.LENGTH_LONG).show();
             keyIndex = 0;
             miningButton.setText("Start Mining Again!");

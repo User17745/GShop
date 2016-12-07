@@ -15,9 +15,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.jar.Manifest;
 
-import static com.rigassembler.hplap.gshop.Extractor.productNames;
-import static com.rigassembler.hplap.gshop.Extractor.productPrices;
-import static com.rigassembler.hplap.gshop.Extractor.websiteNames;
+import static com.rigassembler.hplap.gshop.VariableRepo.productNames;
+import static com.rigassembler.hplap.gshop.VariableRepo.productPrices;
+import static com.rigassembler.hplap.gshop.VariableRepo.searchKey;
+import static com.rigassembler.hplap.gshop.VariableRepo.websiteNames;
 import static com.rigassembler.hplap.gshop.MainActivity.mainActContext;
 import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
 import static com.rigassembler.hplap.gshop.VariableRepo.searchProducts;
@@ -27,8 +28,6 @@ import static com.rigassembler.hplap.gshop.VariableRepo.searchProducts;
  */
 
 public class CSV {
-
-    static int serial = 1;
 
     static String currentDateAndTime = DateFormat.getDateTimeInstance().format(new Date());
 
@@ -64,11 +63,8 @@ public class CSV {
         currentDateAndTime = currentDateAndTime.replace('.', ' ');
 
         writeCsvFolder.mkdirs();
-        writeFileName = serial + " G Shop Price List (" + currentDateAndTime + ").csv";
+        writeFileName = " G Shop Price List (" + currentDateAndTime + ").csv";
         writeFilePath = writeCsvFolder.getPath() + File.separator + writeFileName;
-
-        //Toast.makeText(mainActContext,writeFileName,Toast.LENGTH_SHORT).show();
-        //Toast.makeText(mainActContext,"Saved at: " + writeFilePath,Toast.LENGTH_SHORT).show();
     }
 
     public void dataPrepare() {
@@ -79,7 +75,7 @@ public class CSV {
                 "Product Price"});
         if (websiteNames.size() > 0)
             for (int i = 0; i < websiteNames.size(); i++) {
-                writeData.add(new String[]{currentKeyword,
+                writeData.add(new String[]{searchKey.get(i),
                         productNames.get(i),
                         websiteNames.get(i),
                         productPrices.get(i)});
@@ -94,7 +90,6 @@ public class CSV {
                 CSVWriter writer = new CSVWriter(new FileWriter(writeFilePath));
                 writer.writeAll(writeData);
                 writer.close();
-                serial++;
                 Toast.makeText(mainActContext, "File saved as:\n" + writeFilePath, Toast.LENGTH_SHORT).show();
             } else
                 Toast.makeText(mainActContext, "Data is empty", Toast.LENGTH_SHORT).show();
