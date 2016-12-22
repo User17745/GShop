@@ -22,6 +22,7 @@ import static com.rigassembler.hplap.gshop.VariableRepo.websiteNames;
 public class Extractor {
 
     static int totalProducts;
+    String shortCode;
 
     public Extractor() {
         shortener();
@@ -30,13 +31,13 @@ public class Extractor {
     }
 
     public void shortener() {
-        code = code.substring(code.indexOf("<g-scrolling-carousel"), code.indexOf("</g-scrolling-carousel>") + "</g-scrolling-carousel>".length());
+        shortCode = code.substring(code.indexOf("<g-scrolling-carousel"), code.indexOf("</g-scrolling-carousel>") + "</g-scrolling-carousel>".length());
     }
 
     public void count() {
         totalProducts = 0;
-        for (int i = 0; i < code.length(); i++)
-            if (code.charAt(i) == '₹') {
+        for (int i = 0; i < shortCode.length(); i++)
+            if (shortCode.charAt(i) == '₹') {
                 totalProducts++;
             }
     }
@@ -54,10 +55,10 @@ public class Extractor {
         oTag.add("<div class=\"_FLg a\">");
 
         for (String ot : oTag) {
-            index = code.indexOf(ot);
+            index = shortCode.indexOf(ot);
             while (index >= 0) {
                 fromIndex.add(index + ot.length());
-                index = code.indexOf(ot, index + ot.length());
+                index = shortCode.indexOf(ot, index + ot.length());
             }
         }
 
@@ -67,20 +68,20 @@ public class Extractor {
         cTag.add("</div></div></a></g-inner-card>");
 
         for (String ct : cTag) {
-            index = code.indexOf(ct);
+            index = shortCode.indexOf(ct);
             while (index >= 0) {
                 toIndex.add(index);
-                index = code.indexOf(ct, index + ct.length());
+                index = shortCode.indexOf(ct, index + ct.length());
             }
         }
 
         for (int i = 0; i < toIndex.size(); i++) {
             if (i < totalProducts)
-                productNames.add(code.substring(fromIndex.get(i), toIndex.get(i)));
+                productNames.add(shortCode.substring(fromIndex.get(i), toIndex.get(i)));
             else if (i >= totalProducts && i < 2 * totalProducts)
-                productPrices.add(code.substring(fromIndex.get(i) + 7, toIndex.get(i)).replace(",", ""));
+                productPrices.add(shortCode.substring(fromIndex.get(i) + 7, toIndex.get(i)).replace(",", ""));
             else {
-                websiteNames.add(code.substring(fromIndex.get(i), toIndex.get(i)));
+                websiteNames.add(shortCode.substring(fromIndex.get(i), toIndex.get(i)));
                 searchKey.add(currentKeyword);
             }
         }

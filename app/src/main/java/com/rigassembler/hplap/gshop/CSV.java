@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.rigassembler.hplap.gshop.VariableRepo.baseDirectory;
 import static com.rigassembler.hplap.gshop.VariableRepo.productNames;
 import static com.rigassembler.hplap.gshop.VariableRepo.productPrices;
 import static com.rigassembler.hplap.gshop.VariableRepo.searchKey;
@@ -27,9 +28,7 @@ import static com.rigassembler.hplap.gshop.VariableRepo.searchProducts;
 
 public class CSV {
 
-    static String currentDateAndTime = DateFormat.getDateTimeInstance().format(new Date());
-
-    static String baseDirectory = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+    static String currentDateAndTime;
 
     File writeCsvFolder = new File(baseDirectory + File.separator + "G Shop" + File.separator + "Output CSV" + File.separator);
     static String writeFileName;
@@ -45,6 +44,7 @@ public class CSV {
 
     CSV(boolean writeTrueReadFalse) {
         if (writeTrueReadFalse) {
+            currentDateAndTime = DateFormat.getDateTimeInstance().format(new Date());
             writeFileConfig();
             dataPrepare();
             writeCSV();

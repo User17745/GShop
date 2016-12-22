@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class VariableRepo {
 
+    static String baseDirectory = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+
     static ArrayList<String> searchProducts, costPrices;
     static ArrayList<String> searchKey, productNames, productPrices, websiteNames;
     static String code;
