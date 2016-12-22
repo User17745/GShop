@@ -13,14 +13,12 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.jar.Manifest;
 
 import static com.rigassembler.hplap.gshop.VariableRepo.productNames;
 import static com.rigassembler.hplap.gshop.VariableRepo.productPrices;
 import static com.rigassembler.hplap.gshop.VariableRepo.searchKey;
 import static com.rigassembler.hplap.gshop.VariableRepo.websiteNames;
 import static com.rigassembler.hplap.gshop.MainActivity.mainActContext;
-import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
 import static com.rigassembler.hplap.gshop.VariableRepo.searchProducts;
 
 /**
@@ -45,16 +43,15 @@ public class CSV {
     static List<String[]> readData;
 
 
-    CSV() {
-        writeFileConfig();
-        dataPrepare();
-        writeCSV();
-    }
-
-    CSV(boolean read)
-    {
-        readFileConfig();
-        readCSV();
+    CSV(boolean writeTrueReadFalse) {
+        if (writeTrueReadFalse) {
+            writeFileConfig();
+            dataPrepare();
+            writeCSV();
+        } else {
+            readFileConfig();
+            readCSV();
+        }
     }
 
     public void writeFileConfig() {
@@ -63,7 +60,7 @@ public class CSV {
         currentDateAndTime = currentDateAndTime.replace('.', ' ');
 
         writeCsvFolder.mkdirs();
-        writeFileName = " G Shop Price List (" + currentDateAndTime + ").csv";
+        writeFileName = "G Shop Price List (" + currentDateAndTime + ").csv";
         writeFilePath = writeCsvFolder.getPath() + File.separator + writeFileName;
     }
 
@@ -90,16 +87,16 @@ public class CSV {
                 CSVWriter writer = new CSVWriter(new FileWriter(writeFilePath));
                 writer.writeAll(writeData);
                 writer.close();
-                Toast.makeText(mainActContext, "File saved as:\n" + writeFilePath, Toast.LENGTH_SHORT).show();
             } else
                 Toast.makeText(mainActContext, "Data is empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(mainActContext, "File saved as:\n" + writeFilePath, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(mainActContext, "Error while creating the file :/", Toast.LENGTH_SHORT).show();
         }
     }
 
-    void readFileConfig(){
+    void readFileConfig() {
         readCsvFolder.mkdirs();
 
         readFileName = "products.csv";
@@ -107,6 +104,7 @@ public class CSV {
     }
 
     void readCSV() {
+        int fetched = 0;
         try {
 
             readData = new ArrayList<String[]>();
@@ -115,8 +113,9 @@ public class CSV {
             String[] row;
             while ((row = reader.readNext()) != null) {
                 searchProducts.add(row[0]);
-                Toast.makeText(mainActContext,"Saved : " + row[0],Toast.LENGTH_SHORT).show();
+                fetched++;
             }
+            Toast.makeText(mainActContext, fetched + " items fetched successfully!", Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

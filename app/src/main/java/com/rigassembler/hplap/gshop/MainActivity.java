@@ -11,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.rigassembler.hplap.gshop.CodeSaver.writeToFile;
 import static com.rigassembler.hplap.gshop.Extractor.totalProducts;
@@ -58,6 +59,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        prices = (Button) findViewById(R.id.fetch_csv_button);
+        prices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new CSV(false);
+            }
+        });
+
         /* An instance of this class will be registered as a JavaScriptInterface interface */
         class CodeCopyJavaScriptInterface {
             @JavascriptInterface
@@ -66,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 // process the html as needed by the app
                 code = html;
 
-                new Extractor();
+                if (code.contains("<g-scrolling-carousel"))
+                    new Extractor();
+                else {
+                    Toast.makeText(mainActContext, "No products on this page, \nSkip to the next one", Toast.LENGTH_SHORT).show();
+                    //searcher = new Searcher();
+                }
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -103,10 +117,10 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.option_create_csv)
-            new CSV();
+            new CSV(true);
 
         if (id == R.id.option_read_csv)
-            new CSV(true);
+            new CSV(false);
 
         if (id == R.id.option_refresh) {
             browser.loadUrl(browser.getUrl());

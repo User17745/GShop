@@ -39,17 +39,17 @@
         android:layout_margin="10dp"
         android:text="Start Mining!" />
 
-   <!-- <Button
-        android:id="@+id/price_button"
+   <Button
+        android:id="@+id/fetch_csv_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/mining_button"
         android:layout_alignBottom="@+id/mining_button"
         android:layout_toLeftOf="@+id/mining_button"
         android:layout_toStartOf="@+id/mining_button"
-        android:text="Price" />
+        android:text="Fetch CSV" />
 
-    <Button
+    <!-- <Button
         android:id="@+id/name_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

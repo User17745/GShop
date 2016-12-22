@@ -15,35 +15,23 @@ import static com.rigassembler.hplap.gshop.VariableRepo.searchProducts;
  */
 
 public class Searcher {
-    static List<String> keywords;
     static String currentKeyword;
     static int keyIndex = 0;
 
     Searcher() {
-        //populate();
         if(searchProducts.size() > 0)
             search();
         else
             Toast.makeText(mainActContext,"Load the products from CSV before searching",Toast.LENGTH_SHORT).show();
     }
 
-    void populate() {
-        keywords = new ArrayList<String>();
-        keywords.add("i3 processor");
-        keywords.add("i5 processor");
-        keywords.add("teddy bear");
-        keywords.add("chocolate");
-        keywords.add("magnets");
-        keywords.add("pens");
-    }
-
-    void search() {
+    public void search() {
         if (keyIndex < searchProducts.size()) {
             currentKeyword = searchProducts.get(keyIndex++);
             browser.loadUrl("https://www.google.co.in/search?q=" + "buy+" + currentKeyword.replace(' ', '+'));
-            miningButton.setText("Force Next->");
+            miningButton.setText("Skip->");
         } else {
-            new CSV();
+            new CSV(true);
             Toast.makeText(mainActContext, "Last Search Reached, resetting to the first one.\nPress again to restart :)", Toast.LENGTH_LONG).show();
             keyIndex = 0;
             miningButton.setText("Start Mining Again!");

@@ -1,10 +1,13 @@
 package com.rigassembler.hplap.gshop;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.rigassembler.hplap.gshop.MainActivity.mainActContext;
+import static com.rigassembler.hplap.gshop.MainActivity.searcher;
 import static com.rigassembler.hplap.gshop.Searcher.currentKeyword;
 import static com.rigassembler.hplap.gshop.VariableRepo.code;
 import static com.rigassembler.hplap.gshop.VariableRepo.productNames;
@@ -20,15 +23,14 @@ public class Extractor {
 
     static int totalProducts;
 
-    public Extractor(){
+    public Extractor() {
         shortener();
         count();
         populate();
-        //new CSV();
     }
 
-    public void shortener(){
-        code = code.substring(code.indexOf("<g-scrolling-carousel"),code.indexOf("</g-scrolling-carousel>") + "</g-scrolling-carousel>".length());
+    public void shortener() {
+        code = code.substring(code.indexOf("<g-scrolling-carousel"), code.indexOf("</g-scrolling-carousel>") + "</g-scrolling-carousel>".length());
     }
 
     public void count() {
@@ -72,17 +74,15 @@ public class Extractor {
             }
         }
 
-        for(int i = 0 ; i < toIndex.size() ; i++)
-        {
-            if(i < totalProducts)
-                productNames.add(code.substring(fromIndex.get(i),toIndex.get(i)));
-            else
-                if(i >= totalProducts && i < 2*totalProducts)
-                    productPrices.add(code.substring(fromIndex.get(i)+7,toIndex.get(i)).replace(",",""));
-                        else {
-                    websiteNames.add(code.substring(fromIndex.get(i), toIndex.get(i)));
-                    searchKey.add(currentKeyword);
-                }
+        for (int i = 0; i < toIndex.size(); i++) {
+            if (i < totalProducts)
+                productNames.add(code.substring(fromIndex.get(i), toIndex.get(i)));
+            else if (i >= totalProducts && i < 2 * totalProducts)
+                productPrices.add(code.substring(fromIndex.get(i) + 7, toIndex.get(i)).replace(",", ""));
+            else {
+                websiteNames.add(code.substring(fromIndex.get(i), toIndex.get(i)));
+                searchKey.add(currentKeyword);
+            }
         }
     }
 }
